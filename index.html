@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadoras Minecraft</title>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>Calculadora de Packs (64)</h2>
+        <input type="number" id="blocos" placeholder="Insira o número de blocos">
+        <button onclick="calcularPacks()">Calcular</button>
+        <div class="resultado" id="resultadoPacks"></div>
+    </div>
+
+    <div class="card">
+        <h2>Coordenadas do Mundo Superior → Nether</h2>
+        <div class="linha">
+            <label>x</label>
+            <input id="owX" type="number" placeholder="123">
+            <label>y</label>
+            <input id="owY" type="number" placeholder="50">
+            <label>z</label>
+            <input id="owZ" type="number" placeholder="321">
+        </div>
+        <button onclick="toNether()">Converter</button>
+        <div class="resultado" id="resultadoNether"></div>
+    </div>
+
+    <div class="card">
+        <h2>Coordenadas do Nether → Mundo Superior</h2>
+        <div class="linha">
+            <label>x</label>
+            <input id="netX" type="number" placeholder="15">
+            <label>y</label>
+            <input id="netY" type="number" placeholder="50">
+            <label>z</label>
+            <input id="netZ" type="number" placeholder="40">
+        </div>
+        <button onclick="toOverworld()">Converter</button>
+        <div class="resultado" id="resultadoOver"></div>
+    </div>
+
+    <script>
+        function calcularPacks() {
+            let blocos = parseInt(document.getElementById('blocos').value);
+            if (isNaN(blocos) || blocos < 0) {
+                document.getElementById('resultadoPacks').innerHTML = "Insira um número válido.";
+                return;
+            }
+            let packs = Math.floor(blocos / 64);
+            let resto = blocos % 64;
+            document.getElementById('resultadoPacks').innerHTML =
+                `Packs completos: ${packs}<br>Blocos restantes: ${resto}`;
+        }
+
+        function toNether() {
+            let x = parseFloat(document.getElementById('owX').value);
+            let y = parseFloat(document.getElementById('owY').value);
+            let z = parseFloat(document.getElementById('owZ').value);
+
+            if (isNaN(x) || isNaN(y) || isNaN(z)) {
+                document.getElementById('resultadoNether').innerHTML = "Insira coordenadas válidas.";
+                return;
+            }
+
+            let nx = x / 8;
+            let nz = z / 8;
+
+            document.getElementById('resultadoNether').innerHTML =
+                `Nether: (${nx.toFixed(2)}, ${y}, ${nz.toFixed(2)})`;
+        }
+
+        function toOverworld() {
+            let x = parseFloat(document.getElementById('netX').value);
+            let y = parseFloat(document.getElementById('netY').value);
+            let z = parseFloat(document.getElementById('netZ').value);
+
+            if (isNaN(x) || isNaN(y) || isNaN(z)) {
+                document.getElementById('resultadoOver').innerHTML = "Insira coordenadas válidas.";
+                return;
+            }
+
+            let ox = x * 8;
+            let oz = z * 8;
+
+            document.getElementById('resultadoOver').innerHTML =
+                `Overworld: (${ox.toFixed(2)}, ${y}, ${oz.toFixed(2)})`;
+        }
+    </script>
+
+</body>
+
+</html>
